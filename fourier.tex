@@ -1,0 +1,285 @@
+\section{Fourier series}
+
+% REFS: Stein and Shakarchi, Fourier Analysis; Titchmarsh
+
+% Need some functional analysis to even talk about this stuff, though... maybe split functional into two parts (one before, one after).
+
+Perspective of a mathematician. Perspective of an engineer. Laplace transform and its relation to Fourier (use in signals and systems, etc). Motivation from/applications to linear differential equations (start with Laplace's equation on the disk in polar coordinates). Paley--Wiener theorems.
+
+\subsection{Fourier coefficients}
+
+Fourier series and Fourier coefficients.
+
+We perform the following (to be justified later) manipulation:
+\[ \int_{-\pi}^{\pi} f \mathbf{e}^{-N} = \ldots = 2\pi c_N(f). \]
+This motivates us to define the Dirichlet kernel.
+
+\subsection{Convolution}
+
+\begin{definition}
+A \vocab{homogeneous Banach space} is a Banach space $\mathcal{B} \subseteq L_1(\mathbb{T})$ such that... blah
+\end{definition}
+
+Each $h \in C(\mathbb{T})$ yields a convolution operator on $\mathcal{B}$. We compute their operator norms below.
+
+\begin{proposition}
+If $\mathcal B$ is a homogeneous Banach space over $\mathbb{T}$ and $h \in C(\mathbb{T})$ [or piecewise continuous, bounded, $2\pi$-periodic] then the \vocab{convolution operator} $C(h) : \mathcal{B} \to \mathcal{B}$ given by $C(h)f := h * f$ is linear and bounded, with operator norm $\| C(h) \| \leq \| h \|_1$.
+\end{proposition}
+
+\begin{theorem}[norms of convolution operators]
+Let $h \in C(\mathbb{T})$. Then on both $C(\mathbb{T})$ and $L_1(\mathbb{T})$, the operator norm of $C(h)$ equals $\| h \|_1$.
+\end{theorem}
+
+The previous proposition gave us the upper bound, so we only need the lower bound.
+
+\begin{proof}[Proof for $C(\mathbb{T})$]
+TODO.
+\end{proof}
+
+\begin{proof}[Proof for $L_1(\mathbb{T})$]
+Idea is to use an approximate identity(?). If we put $f_n = \pi n \chi_{[-1/n,1/n]}$ then $(f_n)_n \subset \mathsf{S}[L_1(\mathbb{T})]$. Now, for almost every $t$, using translation invariance,
+\[ h * f_n(t) = \frac{1}{2 \pi} \int_{-\pi}^\pi h(s) f_n(t-s) \; ds = \frac{1}{2\pi} \int_{-\pi}^\pi h(s+t) f_n(-s) \; ds = \frac{n}{2} \int_{-1/n}^{1/n} h(s+t) \; ds. \]
+Given $\eps > 0$ there is $\delta > 0$ such that $|h(t) - h(s+t)| < \eps$ for $|s-0| < \delta$. Then for $n$ such that $\tfrac{1}{n} < \delta$,
+\begin{align*}
+\| h - h * f_n \|_1 & = \frac{1}{2\pi} \int_{-\pi}^{\pi} |h(t) - h * f_n(t)| \; dt \\
+& = \frac{1}{2\pi} \int_{-\pi}^{\pi} \left| h(t) - \frac{n}{2} \int_{-1/n}^{1/n} h(s+t) \; ds \right| \; dt \\
+& = \frac{1}{2\pi} \int_{-\pi}^{\pi} \frac{n}{2} \left| \int_{-1/n}^{1/n} (h(t) - h(t+s)) \; ds \right| \; dt \\
+& \leq \frac{1}{2\pi} \int_{-\pi}^{\pi} \frac{n}{2} \int_{-1/n}^{1/n} |h(t) - h(t+s)| \; ds \; dt \leq \eps.
+\end{align*}
+Hence $\| h - h * f_n \|_1 \to 0$ as $n \to \infty$ and thus due to the reverse triangle inequality, $\| h * f_n \|_1 \to \| h \|_1$.
+% \[ \lim \left| \| h \|_1 - \| h * f_n \|_1 \right| \leq \lim \| h - h * f_n \|_1 = 0. \]
+Thus $\| C(h) \| \geq \sup \| h * f_n \|_1 \geq \lim \| h * f_n \|_1 = \| h \|_1$.
+\end{proof}
+
+\subsection{Dirichlet kernel}
+
+% REFS: https://en.wikipedia.org/wiki/Convergence_of_Fourier_series
+
+Motivated by the convolution identity above, we have:
+
+\begin{definition}
+We define the \vocab{Dirichlet kernel of order $n$} by
+\[ D_n := \sum_{k=-n}^n \mathbf{e}^k. \]
+\end{definition}
+
+\begin{center}
+\includegraphics[width=400px]{Dirkern.png}
+% TODO: better illustration
+\end{center}
+
+\begin{theorem}[properties]
+The Dirichlet kernel has the following properties:
+\begin{enumerate}
+\item $D_n$ is real-valued, $2\pi$-periodic and even.
+\item $\displaystyle \frac{1}{2\pi} \int_{-\pi}^{\pi} D_n = 1$.
+\item \emph{Explicit formula}: $\displaystyle D_n(t) = \begin{cases} \frac{\sin((n+\tfrac{1}{2})t)}{\sin(\tfrac{1}{2}t)} & t \neq 0 \\ 2n+1 & t=0. \end{cases}$
+\item $\| D_n \|_1 \to \infty$ as $n \to \infty$.
+\end{enumerate}
+\end{theorem}
+
+We often call $L_n := \| D_n \|_1$ the \vocab{$n$th Lebesgue constant}. In a sense, the fact that $L_n \to \infty$ is somewhat responsible for the admittedly miserable state of affairs when it comes to the convergence of Fourier series.
+%https://en.wikipedia.org/wiki/Convergence_of_Fourier_series
+
+\begin{proof}
+We have:
+\begin{enumerate}
+\item Clear: $D_n(t) = 1 + 2 \sum_{k=1}^n \cos(kt)$.
+\item Clear: $\int_{-\pi}^\pi \mathbf{e}^k = 2 \pi \delta_{k,0}$.
+\item For $t \neq 0$ we have (thanks to all terms except on the boundary of summation cancelling) % TODO: insert diagram?
+\[ D_n (\mathbf{e}^{1/2} - \mathbf{e}^{-1/2}) = \left( \sum_{k=-n}^n \mathbf{e}^k \right) (\mathbf{e}^{1/2} - \mathbf{e}^{-1/2}) = \mathbf{e}^K - \mathbf{e}^{-K}, \qquad K := n + \tfrac{1}{2}. \]
+Thus,
+\[ D_n(t) = \frac{2i \sin(Kt)}{2i \sin(\tfrac{1}{2}t)} = \frac{\sin((n+\tfrac{1}{2})t)}{\sin(\tfrac{1}{2}t)}. \]
+\item By evenness, $L_n = \frac{1}{2\pi} \int_{-\pi}^\pi |D_n| = \frac{1}{\pi} \int_0^\pi |D_n|$. {\color{red}TODO: Find a quick proof that doesn't derive the exact $4/\pi^2$ asymptotic.} \qedhere
+\end{enumerate}
+\end{proof}
+
+%\begin{remark}[curiosity; delete me]
+%Since $D_n(t) = 1 + 2 \sum_{k=1}^n \cos(kt)$, there should be a way to express it solely in terms of $\cos t$ by using Chebyshev polynomials.
+%\end{remark}
+
+As a consequence of Banach--Steinhaus, we see the following, which gives us an idea of the dramatic failure of Fourier series to converge pointwise:
+
+\begin{theorem}
+We have:
+\begin{enumerate}
+\item The set of $f \in C(\mathbb{T})$ for which $\sup_{n \in \NN} \| s_n(f) \|_\infty < \infty$ (in particular, for which $\lim_{n \to \infty} \| s_n(f) - f \|_\infty = 0$) is a meager subset of $C(\mathbb{T})$.
+\item Identical statement for $f \in L_1(\mathbb{T})$ with $\| \cdot \|_1$ in place of $\| \cdot \|_\infty$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\end{proof}
+
+\subsection{Fej\'er kernel}
+
+\begin{definition}
+If $(x_n)_{n=1}^\infty$ is a sequence in a Banach space $\mathcal{X}$, we call $\sigma_n = \tfrac{1}{n} \sum_{k=1}^n x_k$ the \vocab{$n$th Ces\`aro mean}.
+\end{definition}
+
+One can show that if $(x_n)$ converges to $x_0$, then so does $(\sigma_n)$. Given a function $f \in L_1(\mathbb{T})$, we have a sequence $(s_n(f))_{n=0}^\infty$. The corresponding Ces\`aro sequence is written $(\sigma_n(f))$. That is,
+\[ \sigma_n(f) = \frac{1}{n+1}( s_0(f) + \cdots + s_n(f) ) = \frac{1}{n+1}(D_0 + D_1 + \cdots + D_n) * f =: K_n * f. \]
+The resulting kernel $K_n$, called the \vocab{Fej\'er kernel}, has far nicer properties (for one, it is nonnegative).
+
+\begin{center}
+\includegraphics[width=400px]{Fejkern.png}
+% TODO: better illustration
+\end{center}
+
+
+\begin{theorem}[properties of Fej\'er kernel]
+We have:
+\begin{enumerate}
+\item $K_n$ is real-valued, $2\pi$-periodic and even.
+\item \emph{Explicit formula}: ugly %TODO
+\item $\displaystyle \| K_n \|_1 = \frac{1}{2\pi} \int_{-\pi}^{\pi} K_n = 1$.
+\item If $0 < |t| < \pi$, then $0 \leq K_n(t) \leq \pi^2 (n+1)^{-1} t^{-2}$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{More stuff}
+
+\begin{definition}
+A \vocab{summability kernel} is a sequence $(k_n)_{n=1}^\infty$ of $2\pi$-periodic bounded piecewise-continuous functions such that
+\begin{enumerate}
+\item $\ldots$
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+The Fej\'er kernel $(K_n)_{n=1}^\infty$ is a summability kernel.
+\end{proposition}
+
+\begin{theorem}[Abstract Summability Kernel Theorem]
+Let $\mathcal B$ be a homogeneous Banach space on $\mathbb{T}$, and $(k_n)_{n=1}^\infty$ be a summability kernel. Then for $f \in \mathcal{B}$, $\| k_n * f - f \|_{\mathcal B} \to 0$ as $n \to \infty$. That is, $k_n * f \to f$ in $\mathcal B$.
+\end{theorem}
+
+Riesz--Fischer theorem. Plancherel theorem.
+
+\subsection{Fourier algebra}
+
+% REFS: 450 notes; http://www.math.snu.ac.kr/~wylee/KOTAC2015/Slide/Hun%20Hee%20Lee.pdf
+
+Does every sequence $(c_k)_{k \in \ZZ}$ of real (or complex) numbers arise as $(c_k(f))$ for some $f \in L_1(\mathbb{T})$? The following observation is trivial.
+
+\begin{lemma}
+If $f \in L_1(\mathbb{T})$, then for all $k \in \ZZ$, $|c_k(f)| \leq \| f \|_1$.
+\end{lemma}
+
+% too easy to include
+%\begin{proof}
+%$\displaystyle |c_k(f)| = \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-ikt} \; dt \right| \leq \frac{1}{2\pi} \int_{-\pi}^\pi |f(t)| \; dt = \| f \|_1$.
+%\end{proof}
+
+It turns out that furthermore, if there is to be any hope of this working, the $c_k$ actually must decay at infinity. Recall the Banach space $\mathsf{c}_0(\ZZ) \subset \ell_\infty(\ZZ)$.
+
+\begin{theorem}[Riemann--Lebesgue Lemma]
+If $f \in L_1(\mathbb{T})$, then $|c_k(f)| \to 0$ as $|k| \to \infty$. That is, $(c_k(f))_{k \in \ZZ} \in \mathsf{c}_0(\ZZ)$.
+\end{theorem}
+
+\begin{moral}
+Why is this intuitively true?
+\end{moral}
+
+\begin{proof}
+Let $\eps > 0$ and choose $N$ such that $\| \sigma_{N}(f) - f \|_1 < \eps$ (possible by the ASK theorem). For $|k| > N$, observe $c_k(\sigma_{N}(f))=0$. By the lemma above,
+\[ |c_k(f)| = |0 - c_k(f)| = |c_k(\sigma_{N}(f) - f)| \leq \| \sigma_{N}(f) - f \|_1 < \eps. \qedhere \]
+\end{proof}
+
+\begin{corollary}
+If $f \in L(\mathbb{T})$, then $\int_{-\pi}^\pi f(t) \cos(nt) \; dt, \; \int_{-\pi}^\pi f(t) \sin(nt) \; dt \to 0$ as $n \to \infty$.
+\end{corollary}
+
+Recall now from functional analysis that if a bounded linear map between Banach spaces is invertible, then its inverse is bounded. This was the Inverse Mapping Theorem (a consequence of the Open Mapping Theorem). Using this fact, we can show that even decay at infinity is still not a sufficient condition:
+
+\begin{corollary}
+There exists $(c_k)_{k \in \ZZ} \in \mathsf{c}_0(\ZZ)$ which \textbf{does not occur} as the sequence of Fourier coefficients of any $f \in L_1(\mathbb{T})$.
+\end{corollary}
+
+\begin{proof}
+Denote by $T$ the map taking $f \in L_1(\mathbb{T})$ to its sequence of Fourier coefficients $(c_k(f))$. By what we have done so far, $T : L_1(\mathbb{T}) \to \mathsf{c}_0(\ZZ)$ and it is linear, injective, and bounded with $\| T \| \leq 1$. If $T$ were bijective, its inverse $T^{-1}$ would send the unit vectors $d_n = (\ldots,0,1,1,1,0,\ldots)$ of $\mathsf{c}_0(\ZZ)$ to the Dirichlet kernels $D_n$. However, $\| T^{-1}d_n \|_1 = \| D_n \|_1 \to \infty$, meaning $T^{-1}$ would be unbounded. This cannot happen due to the Inverse Mapping Theorem.
+\end{proof}
+
+{\color{red}If the image of $T$ was closed in $\mathsf{c}_0(\ZZ)$, the same argument would show that $T$ cannot surject onto its image? So the image must be incomplete?}
+
+\begin{remark}
+Important function spaces and their corresponding spaces of Fourier coefficients.
+\end{remark}
+
+\begin{theorem}[Hardy's Tauberian Theorem]
+% TODO make statement more concise.
+We have:
+\begin{enumerate}
+\item If $f \in L(\mathbb{T})$ and $\sup_k |kc_k(f)| < \infty$, then for any $t \in [-\pi,\pi]$ for which $\lim_{n \to \infty} \sigma_n(f,t)$ exists, we have $\lim_{n \to \infty} s_n(f,t)$ exists as well. In particular, if $\omega_f(t) = \tfrac{1}{2}[f(t-s)+f(t+s)]$ exists, and $\sup_k |k c_k(f)| < \infty$, then $s_n(f,t) \to \omega_f(t)$. Moreover, if $I$ is any open interval on which $f$ is continuous, and $\sup_k |k c_k(f)| < \infty$, then for any closed interval $J \subset I$,
+\[ \sup_{t \in J} |s_n(f,t) - f(t)| \to 0. \]
+\item If $\mathcal{B}$ is a homogeneous Banach space such that $\| \mathbf{e}^k \|_{\mathcal B} \leq C$ for some fixed $C$ for all $k$, and $f \in \mathcal{B}$, such that $\sup_k |k c_k(f)| < \infty$, then $\| s_n(f) - f \|_{\mathcal{B}} \to 0$. [I think that's what it should be.]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+TODO.
+\end{proof}
+
+\subsection{Pointwise convergence of Fourier series}
+
+\begin{lemma}
+If $f \in L(\mathbb{T})$ with $\displaystyle \int_{-\pi}^\pi \left| \frac{f(t)}{t} \right| \; dt < \infty$, then $s_n(f,0) \to 0$ as $n \to \infty$.
+\end{lemma}
+
+\begin{proof}
+Recall $\sin(x+y) = \sin x \cos y + \cos x \sin y$, hence
+\[ D_n(s) = \frac{\sin(n+\tfrac{1}{2})s}{\sin \tfrac{1}{2}s} = \frac{\sin(ns) \cos \tfrac{1}{2} s}{\sin \tfrac{1}{2} s} + \cos(ns). \]
+% TODO: f is not actually a function, so how do we properly say this?
+Hence, if $\displaystyle g(s) := \frac{\cos \tfrac{1}{2} s \; f(s)}{\sin \tfrac{1}{2} s}$ then noting that $D_n$ is even and applying inversion invariance, we have
+\[ s_n(f,0) = \frac{1}{2\pi} \int_{-\pi}^\pi D_n(s) f(s) \; ds = \frac{1}{2\pi} \int_{-\pi}^\pi \sin(ns) g(s) \; ds + \frac{1}{2\pi} \int_{-\pi}^\pi \cos(ns) f(s) \; ds \tag{*} \]
+We note that for $0 \leq | \theta | \leq \tfrac{\pi}{2}$, we have $|\sin \theta| \geq \tfrac{2}{\pi} |\theta|$, hence $|\sin \tfrac{1}{2} t| \geq \tfrac{1}{\pi} |t|$ for $t \in [-\pi,\pi]$. Thus
+\[ \int_{-\pi}^\pi |g(s)| \; ds = \int_{-\pi}^\pi |\cos \tfrac{1}{2}s| \left| \frac{f(s)}{\sin \tfrac{1}{2} s} \right| \; ds \leq \int_{-\pi}^\pi \frac{|f(s)|}{\tfrac{1}{\pi} |s|} \; ds = \pi \int_{-\pi}^\pi \left| \frac{f(s)}{s} \right| \; ds < \infty. \]
+Thus $g$ defines an element in $L(\mathbb{T})$. Now apply the corollary to the Riemann--Lebesgue lemma to (*).
+% TODO: (This last line is just a rewriting of the one we had above, so can be dropped.)
+\end{proof}
+
+\begin{theorem}[Localisation Principle]
+If $f \in L(\mathbb{T})$ and $I$ is an open interval on which $f(t) = 0$ for almost every $t \in I$, then for $t \in I$, $s_n(f,t) \to 0$ as $n \to \infty$.
+\end{theorem}
+
+\begin{proof}
+Fix $t \in I$, and let $g \in L(\mathbb{T})$ be given by $g(s) = f(t-s) = \check{f}(s-t)$, so $g = t * \check{f}$. Then $g(s) = 0$ for almost every $s$ in a neighbourhood of 0. Hence it is easy to see that the hypothesis of the lemma holds for $g$, so $s_n(g,0) \to 0$. However, $s_n(g,0) = s_n(f,t)$, so we are done.
+% TODO: may be too terse?
+\end{proof}
+
+\begin{corollary}
+If $f, g \in L(\mathbb{T})$ and $I$ is an open interval on which $f=g$ almost everywhere, then for $t \in I$, $s_n(f,t)$ converges if and only if $s_n(g,t)$ does, and in this case the two limits coincide.
+\end{corollary}
+
+\begin{proof}
+Observe $s_n(f-g,t) = s_n(f,t) - s_n(g,t) \to 0$.
+\end{proof}
+
+\begin{theorem}[Dini]
+If $f \in L(\mathbb{T})$ and $f$ is differentiable at $t \in [-\pi,\pi]$, then $s_n(f,t) \to f(t)$.
+\end{theorem}
+
+\begin{proof}
+TODO
+\end{proof}
+
+\begin{theorem}[Dini Theorem for Lipschitz functions]
+If $f \in L(\mathbb{T})$ and $f$ is Lipschitz on an open interval $I$, i.e.\ there is $M>0$ such that $|f(t)-f(s)| \leq M|t-s|$ for all $s,t \in I$. Then for $t \in I$, we have $s_n(f,t) \to f(t)$.
+\end{theorem}
+
+\begin{proof}
+TODO
+\end{proof}
+
+\begin{remark}
+TODO: Lusin's conjecture and the proof of it by Carleson. States that the Fourier series of a square-integrable function (hence any continuous function) converges almost everywhere. If a function is continuously differentiable, its Fourier series converges to it everywhere.
+\end{remark}
+
+\subsection{Square-integrable case}
+
+Plancherel, Parseval, bunch of standard Hilbert space results in the $L_2$ case. Solution of Basel problem $\zeta(2) = \pi^2/6$, using Parseval's identity.
+
+\subsection{Gibbs phenomenon}
+
+\subsection{Other topics}
+
+Fourier transform (generalization to non-periodic functions on $\RR$). Fourier analysis on groups.
