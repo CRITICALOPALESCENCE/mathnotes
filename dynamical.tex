@@ -1,0 +1,27 @@
+\section{Dynamical systems and ergodic theory}
+
+\begin{example}[equidistribution theorem]
+% PM 763 (Lie groups) asmt question
+The multiples of an irrational number, when considered mod 1, are dense in the unit interval.
+\end{example}
+
+There are related(?) results of Dirichlet and Kronecker in Diophantine approximation.
+
+\subsection{Integrable systems}
+
+\subsection{Solitons and inverse scattering}
+
+\subsection{Hitchin system}
+
+Algebraically completely integrable Hamiltonian system. Let $\Sigma$ be a compact Riemann surface of genus $g$. Consider the set of $v \in T^* \Sigma$ (cotangent bundle) that satisfy
+\[ P_n(v) = \det(\Phi - vI) = v^n + Q_1 v^{n-1} + Q_2 v^{n-2} + \cdots + Q_n \]
+where $Q_i \in H^0(\Sigma, K^i)$, that is, a holomorphic $i$-differential on $\Sigma$. This locus in $T^* \Sigma$ defines a \emph{spectral cover} $\widehat{\Sigma} \twoheadrightarrow \Sigma$, and $v$ can be viewed as an abelian differential on $\widehat{\Sigma}$. Here $\Phi$ is the Higgs field on $\Sigma$. These are called $\mathrm{GL}(n)$ spectral covers\footnote{More generally one can discuss $G$-spectral covers; then $\mathcal{M}^{\Sigma,G} = \bigoplus_{i=1}^k H^0(\Sigma, K^{d_i})$ where $\mathbf{d} = (d_1,\ldots,d_k) \in \mathbb{Z}^k$ is a property of $G$, namely the vector of degrees of the invariant polynomials.}; the moduli space of them (for fixed $\Sigma$) is the $n^2(g-1)+1$ dimensional space \[ \mathcal{M}^{\Sigma,\mathrm{GL}(n)} = \bigoplus_{i=1}^n H^0(\Sigma, K^i). \]
+We then consider the moduli space for variable $\Sigma$,
+\[ \mathcal{M} = \mathcal{M}^{\mathrm{GL}(n)} = \bigoplus_{i=1}^n \Omega_g^{(i)}, \qquad \Omega_g^{(i)} := \nu_* \omega_g^{\otimes i} \]
+with $\omega_g = \omega_{\mathcal{C}_g/M_g}$ the relative dualizing sheaf and $\nu : \mathcal{C}_g \to M_g$ the universal curve. This is just a formal way of doing the obvious thing i.e.\ sticking $\mathcal{M}^\Sigma$ above every point $\Sigma \in M_g$. We can take the discriminant of the polynomial $P_n$. This leads to defining the Hitchin's discriminant locus in $\mathcal{M}$ (the \emph{base} of the Hitchin system, which involves a partial compactification of the moduli space of vector, or principal, bundles on $\Sigma$).
+
+The simplest case is $n=2$. Then in the $\mathrm{SL}(2)$ case we have $Q_1=0$, so we are just looking at the cover defined by $v^2 = Q$ for $Q$ a quadratic differential on $\Sigma$. This has been well-studied; actually it is (an open subset of?) the cotangent bundle of the moduli space $\overline{M}_g$. We already know the latter object carries a lot of interesting structure, like the homological symplectic structure etc. Can these be generalized to $\mathcal{M}$?
+
+% TODO: See SSP blog for more posts on this topic.
+
+\subsection{Fractals and iterated function systems}
