@@ -1,0 +1,442 @@
+\section{Preliminaries}
+
+Largely based on \cite{redpill}. References include \cite{Kapl,Aluf,PM145}. Some set-theoretic stuff can be found in \cite[\S 1]{PM351} which should be moved here eventually, although the cardinal arithmetic can wait.
+
+These are things you need to know before you can do just about any mathematics at all. Being mostly an onslaught of definitions and terminology, and rather little in the way of theorems, this chapter will inevitably be somewhat dry and boring. The reader should not feel guilty about skipping it and referring back as necessary.
+
+\subsection{Sets}
+
+Set builder notation, containment, equality, empty set, union, intersection, complement, set difference, Cartesian product (generalization to arbitrary indexing family using ``choice functions''), Cartesian power. Power set. Properties (commutativity, associativity, de Morgan laws). Extension from binary operations to $n$-ary operations etc. Commonly used sets (naturals, integers, rationals, reals, complexes). Interval notation. Brief mention of ordinals, ZF and the Axiom of Choice, Russell's paradox, etc. Cardinality notation $|X| = n$ to mean $X$ has $n$ elements.
+
+\subsection{Statements and proofs}
+
+First-order logic: AND (conjunction), OR (disjunction), NOT (negation), implication, and double implication (equivalence). Truth tables.
+
+\begin{definition}
+The \vocab{converse} to an implication ``$A$ implies $B$'' is the statement ``$B$ implies $A$''. The \vocab{contrapositive} is ``not $B$ implies not $A$''.
+\end{definition}
+
+\begin{exercise}
+The contrapositive is equivalent to the original implication. That is, $A \implies B$ and $(\lnot B) \implies (\lnot A)$ are equivalent.
+\end{exercise}
+
+Second-order logic: universal quantifier $\forall$, existential quantifier $\exists$, etc.
+
+\subsubsection*{Proof techniques}
+
+Direct proof, proof by contradiction (law of the excluded middle), mathematical induction.
+
+\subsection{Relations}
+
+Let $X$ and $Y$ be sets.
+
+\begin{definition}
+A \vocab{(binary) relation between $X$ and $Y$} is a subset $R$ of $X \times Y$. Often $Y=X$, in which case we simply call $R$ a \vocab{relation on $X$}.
+\end{definition}
+
+If $R$ is a relation, then for elements $x \in X$ and $y \in Y$ we use the shorthand ``$xRy$'' to mean that the pair $(x,y)$ belongs to $R$.
+
+\begin{definition}
+A relation $R$ on $X$ is called:
+\begin{itemize}
+\item \vocab{reflexive} if $xRx$ for all $x \in X$.
+\item \vocab{symmetric} if $xRy$ implies $yRx$ for all $x,y \in X$.
+\item \vocab{transitive} if $xRy$ and $yRz$ implies $xRz$ for all $x,y,z \in X$.
+\item \vocab{antisymmetric} if $xRy$ and $yRx$ implies $x=y$ for all $x,y \in X$.
+\end{itemize}
+\end{definition}
+
+\begin{exercise}
+A common mistake is to think that symmetry and transitivity together imply reflexivity. Why is this not true?
+\end{exercise}
+
+\subsubsection{Equivalence relations and partitions}
+
+Above we talked about subsets. This concept allows us to restrict attention to certain objects. Equally important in mathematics, however, is the ``dual'' ability to \emph{group (or glue) objects together}.
+
+\begin{definition}
+A relation $R$ that is reflexive, symmetric and transitive is called an \vocab{equivalence relation}. Usually we use a symbol like $\sim$ instead of $R$ in this case.
+\end{definition}
+
+If $\sim$ is an equivalence relation, and $x \in X$, we define the \vocab{equivalence class} $[x]$ of $x$ to be the set of all $y \in X$ satisfying $x \sim y$ (i.e.\ all the elements related to $x$ under $\sim$). Note that $x \in [x]$, showing that in particular \emph{each equivalence class is nonempty} and moreover that \emph{each element of $X$ lies in \ul{some} equivalence class}. Thus, any equivalence relation ``breaks $X$ up into pieces''. The set of all equivalence classes is denoted $X/{\sim}$ and is called the \vocab{quotient set}. This motivates the following definition.
+
+\begin{definition}
+A \vocab{(set\footnote{Later we will see partitions of an \emph{integer}, which is a distinct concept (it is just a coincidence that the same word is used for both). It is usually clear from context which is meant, but to be unambiguous we can simply say ``set partition''.}) partition} of $X$ is a family $\mathcal{F}$ of subsets of $X$ (that is, $\mathcal{F} \subset \mathcal{P}(X)$), all of which are \emph{nonempty}, such that $\bigcup \mathcal{F} = X$ and such that $A \cap B = \varnothing$ for any two distinct $A,B \in \mathcal{F}$. We call the elements of $\mathcal{F}$ the \vocab{blocks} of $\mathcal{F}$.
+\end{definition}
+
+Thus in words, a partition of $X$ is just a family of nonempty, pairwise disjoint subsets that \emph{cover} $X$; it is a ``decomposition'' of $X$ into ``pieces''.
+
+\begin{example}
+Suppose $X=\ZZ$, the set of integers. Let $2\ZZ$ denote the set of even integers, so that $\ZZ \setminus 2\ZZ$ denotes the set of odd integers. Then
+\[ \mathcal{F} = \{ 2\ZZ, \ZZ \setminus 2 \ZZ \} \]
+is a partition of $\ZZ$ with two blocks.
+\end{example}
+
+The following, then, comes as no surprise:
+
+\begin{proposition}
+Equivalence relations on $X$ are in one-to-one correspondence with partitions of $X$.
+\end{proposition}
+
+\begin{proof}
+Given an equivalence relation on $X$, check that $X/{\sim}$ is a partition of $X$. Conversely, given a partition $\mathcal{F}$ of $X$, define a relation $\sim$ on $X$ by declaring $x \sim y$ precisely when $x$ and $y$ lie in the same element of $\mathcal{F}$. Check that $\sim$ is an equivalence relation. These constructions are clearly mutually inverse.
+\end{proof}
+
+For this reason, the blocks of $\mathcal{F}$ (i.e.\ the ``pieces'') are often referred to as the \vocab{classes}.
+
+\begin{exercise}
+Suppose $X$ is a set of $n$ elements. How many equivalence relations (equivalently, partitions) are there of $X$? How many set partitions $\mathcal{F}$ of $X$ are there with exactly $k$ classes? If you can't give an explicit formula for these counts, can you at least derive a recurrence?
+\end{exercise}
+
+\subsubsection{Order relations}
+
+\begin{definition}
+A relation $\leq$ that is reflexive, \emph{anti}symmetric and transitive is called a \vocab{partial order}. The pair $(X,\leq)$ is then called a \vocab{partially ordered set} (or \vocab{poset}). We can also define \vocab{preorders} by omitting the antisymmetry requirement.
+\end{definition}
+
+If $\leq$ is some kind of order relation, we sometimes write $\geq$ for the \vocab{converse relation}. That is, $a \geq b$ means $b \leq a$.
+
+To a poset is associated its \vocab{Hasse diagram}. % TODO: image
+
+If we have either $a \leq b$ or $b \leq a$ for all $a,b \in X$, we call $\leq$ a \vocab{total order}. A totally ordered subset of a poset is also called a \vocab{chain}. Similarly, a subset where no two elements are comparable is called an \vocab{antichain}.
+
+An element $a$ is called an \vocab{upper bound} if blah. \vocab{Least upper bound} if blah.
+
+An element $a \in X$ is called \vocab{maximal} (resp.\ \vocab{minimal}) element if $a \leq b$ (resp.\ $b \leq a$) implies $a=b$ for all $b \in X$.
+
+\begin{lemma}[Zorn's Lemma]
+If every chain has an upper bound, then there exists a maximal element.
+\end{lemma}
+
+There is also the \emph{well-ordering principle}: every set can be well-ordered (a set is well-ordered if every nonempty subset has a unique minimal element). Here is an application of Zorn's lemma to linear algebra.
+
+\begin{theorem}
+Every vector space has a basis.
+\end{theorem}
+
+\begin{proof}
+Apply Zorn's lemma to the poset $\mathcal{L}$ of linearly independent sets, ordered by inclusion. One simply needs to verify that the union of a subset of $\mathcal{L}$ again belongs to $\mathcal{L}$. Then observe that a maximal element of $\mathcal{L}$ is precisely a basis.
+\end{proof}
+
+\begin{remark}
+There are other special kinds of order relations, like lattices.
+\end{remark}
+
+\subsection{Functions}
+
+% copied from \cite{redpill} sections 2.2.5-2.2.7
+
+\subsubsection{Intuition}
+
+Say we have two sets, call them $A$ and $B$. Here is the ``intuitive definition'': a function is a ``rule'' which assigns, to each element $a$ of $A$, an element of $B$ which we denote $f(a)$ (read out loud as ``$f$ of $a$''). We call $f(a)$ the \vocab{image} of $a$ under $f$. We usually just write 
+\[ f : A \to B \]
+to mean that $f$ is a function from $A$ to $B$. You can think of $f$ as a sort of ``black box'': you feed it an element of $A$, and it spits out an element of $B$.
+
+\begin{center}
+\includegraphics[width=200px]{images/blkbox.png}
+\end{center}
+
+\begin{remark}
+Note that $A$ and $B$ do not necessarily have to be sets of numbers, and even when they are, there's nothing that says $f$ has to be defined by, say, some nice algebraic formula like $f(x) = x^2 + 3$ or something. It can do literally \emph{anything at all}. The concept of a function is very abstract and general, which is why it's so powerful and ubiquitous in mathematics.
+\end{remark}
+
+\begin{example}
+If $A$ is any set, we have a very natural function $A \to A$ given by sending any element $x \in A$ to itself. We call this the \vocab{identity function} on $A$ and denote it variously as $\mathrm{id}_A$, $1_A$, or simply $\mathrm{id}$.
+\end{example}
+
+\subsubsection{Function composition}
+
+\begin{definition}
+Say we have functions $f : A \to B$ and $g : B \to C$. Then we can define a new function $g \circ f : A \to C$ by ``doing $f$ and $g$ in succession'':
+\[ (g \circ f)(a) = g(f(a)), \qquad \forall a \in A. \tag{$\dagger$} \]
+In other words we're just feeding $g$ the \emph{output} of $f$ (which conveniently lands in $B$, the \emph{domain} of $g$), and that lands us in $C$ as desired. This is called \vocab{function composition}.
+\end{definition}
+
+Some people find it hard to remember which one is $g \circ f$ and which is $f \circ g$. Just think of ($\dagger$); it's just the way it's written on the page -- ``$f(x)$'' -- functions are applied on the \emph{left}, so composition is read \emph{right to left}.
+
+\subsubsection{Sets associated to functions}
+
+The set $A$ is called the \vocab{domain} of $f$, and $B$ is called the \vocab{codomain} of $f$. If $S \subseteq A$, the notation $f(S)$ means, as you might expect, the set of all things in $B$ you can get by evaluating $f$ on elements of $S$ (i.e.\ it's the set of all images of elements from $S$):
+\[ f(S) = \{ f(s) \mid s \in S \} \subseteq B. \]
+The case when $S=A$ is special: we define the \vocab{image} (or \vocab{range}) of $f$ to be the set of all things in the codomain that are ``hit'' by something -- in symbols,
+\[ \ran(f) = \img(f) = f(A) = \{ f(a) \mid a \in A \} \subseteq B. \]
+In general, it is possible that $f(A) \subsetneq B$ (see (d) in the diagram below). Also, of course, if $S \subseteq S' \subseteq A$ then $f(S) \subseteq f(S') \subseteq \img(f)$.
+
+Another useful concept to have is the \vocab{preimage}\footnote{$f^{-1}(T)$ is an abuse of notation here, since an inverse function to $f$ may not exist. For better or for worse, it's widespread.} (or \vocab{inverse image}) of a subset $T \subseteq B$: this is just the set of all things in $A$ that \emph{get mapped} into $T$ by $f$, that is,
+\[ f^{-1}(T) = \{ a \in A \mid f(a) \in T \} \subseteq A. \]
+Again, if $T \subseteq T' \subseteq B$, then $f^{-1}(T) \subseteq f^{-1}(T')$, simply because if something gets mapped (by $f$) into $T$, then since $T \subseteq T'$, it is also mapped into $T'$.
+
+\begin{remark}
+Any function $f : A \to B$ induces a partition of $A$: declare $a \sim a'$ if $f(a)=f(a')$. We call $A/\sim$ the \vocab{coimage} of $f$.
+\end{remark}
+
+\begin{exercise}[FIXME]
+% silly because f^{-1}(B) = A is always true
+Find a function such that $f^{-1}(B) = A$ but $f(A) \subsetneq B$.
+\end{exercise}
+
+\begin{example}[FIXME]
+Every human being has exactly one mother, who is herself a human being. Thus, if $A$ is the set of all human beings, there is a function $f : A \to A$ defined as follows: for every human being $x$, let $f(x)$ be the mother of $x$. You could abbreviate this simply as
+\[ f : A \to A, \qquad x \mapsto \text{the mother of $x$}. \]
+\end{example}
+
+The special $\mapsto$ arrow (not to be confused with the $\to$ arrow) is read out loud as ``gets sent to'' or ``is mapped to'', etc. You can also use it to define an ``anonymous function'': so for example
+\[ (x \mapsto x^2)(3) = 3^2 = 9 \]
+(computer scientists refer things like ``$x \mapsto x^2$'' as \vocab{$\lambda$-abstractions}). Note though that this leaves the domain and codomain up to the reader's imagination, which is generally horrible practice (always explicitly specify the domains and codomains of your functions).
+
+\subsubsection{Examples of functions}
+
+A function can't map\footnote{The so-called ``vertical line test'' is taught to schoolchildren: if a graph in $\RR^2$ intersects any vertical line $x=a$ more than once, the graph cannot be the graph $y=f(x)$ of a function. (It could, however, be the graph of a function $x=f(y)$!)} an element of $A$ to \emph{more than one} element of $B$. Every element of $A$ must go to \emph{exactly one} element of $B$. On the other hand, there is nothing in the definition of a function that requires that every element of $B$ has to be ``hit'' by some element of $A$. Here are some diagrams:
+
+\begin{center}
+\includegraphics[width=300px]{images/functions1.jpg}
+\end{center}
+
+\textbf{Only (a) and (d) actually represent functions}. (b) and (c) \emph{do} represent relations, but those particular relations are \emph{not} functions (after we introduce the formal definition below, you'll see that every function, however, \emph{is} a relation). They respectively exemplify the following two phenomena:
+\begin{itemize}
+\item \textbf{Multi-valuedness}. In (b), the element $a$ of $A$ is depicted as being sent to \emph{more than one} element of $B$ (namely $q$ and $r$).
+\item \textbf{Incomplete definition}. (c) suffers, in a sense, from the opposite problem: the element $b$ of $A$ is depicted as not being mapped to any element of $B$ at all!
+\end{itemize}
+
+\begin{remark}
+Even though the two behaviours above are excluded by the definition of a function, there are simple and natural settings where such behaviour is encountered. For example, a number $x$ typically has \emph{two} square roots which we represent $\pm \sqrt{x}$. This means that taking the square root does not define a function but rather what we might call a ``multi-valued function''. A similar problem occurs with logarithms: a nonzero complex number has infinitely many logarithms. The other behaviour, when $f(x)$ is simply not defined for all $x$, is captured by the notion of a ``partial function''. If none of this remark made any sense, don't worry.
+\end{remark}
+
+\subsubsection{Visual representation of functions}
+
+Like any kind of data, there are many useful ways to represent functions (or relations more generally). Perhaps the most familiar is for functions $\RR \to \RR$, when we draw a Cartesian plane and draw the \emph{graph}, that is, all the points $(x,y)$ such that $y=f(x)$. However, functions between higher-dimensional spaces etc.\ arise in many branches of mathematics (complex analysis is a great example), so this idea no longer suffices and we have to get creative (domain colouring methods, projections, etc...)
+
+Graphs (in the sense of \emph{graph theory}) are another way of representing a relation (between vertices and edges).
+
+\subsubsection{Properties of functions}
+
+Let's look at (a) and (d) again. They show some interesting features:
+\begin{itemize}
+\item In (a), there is an element of $B$ (namely $q$) that has \emph{more than one} ``preimage'' (i.e.\ more than one element of $A$ getting mapped to it), namely $b$ and $c$.
+\item In (d), there is an element of $B$ (namely $s$) that doesn't even \emph{have} a preimage!
+\end{itemize}
+
+It turns out that these features are important enough to deserve special names. We call a function \emph{one-to-one} if it does not exhibit the first behaviour, and we call it \emph{onto} if it does not exhibit the second behaviour. So, (d) is one-to-one but not onto, while (a) is onto but not one-to-one. To be precise:
+
+\begin{definition}
+Let $f : A \to B$ be a function. Then:
+\begin{itemize}
+\item We say $f$ is \vocab{one-to-one}, or \vocab{injective}, if distinct \emph{elements} are mapped to distinct \emph{images} (in other words, if $f(a)=f(b)$ implies that $a=b$). We often indicate this by $f : A \injto B$.
+
+The intuition here is that such a function rigidly embeds $A$ into $B$, i.e.\ it paints a ``copy'' of $A$ sitting inside $B$.
+\item We say $f$ is \vocab{onto}, or \vocab{surjective}, if all elements of $B$ have preimages (in other words, for all $b \in B$, there exists an $a \in A$ such that $f(a) = b$). Another way to say this is simply $f(A) = B$. Yet another way to say this is that $\forall b \in B$ we have $f^{-1}(\{ b \}) \neq \varnothing$. We often indicate this by $f : A \surjto B$.
+\item We say $f$ is \vocab{bijective} if it is both one-to-one and onto. People sometimes indicate this by
+\[ f : A \overset{\sim}{\to} B. \]
+A bijective function (often simply called a \vocab{bijection}) is basically a ``perfect matching'' between elements of $A$ and elements of $B$, i.e.\ this kind of situation
+\begin{center}
+\includegraphics[width=250px]{images/bijection.png}
+\end{center}
+We call a bijection $f : A \to A$ (that is, a bijection from a set \emph{to itself}) a \vocab{permutation} of $A$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+By using the coimage $A/{\sim}$, any function $f : A \to B$ can be factorized as a surjection followed by an injection:
+\[ A \surjto A/{\sim} \injto B. \]
+\end{remark}
+
+Injectivity and surjectivity should be thought of as ``dual'' properties in the same sense as the notions of subset and equivalence relation/partition.
+
+\begin{exercise}
+Show that $f : A \to B$ is injective precisely when it has a left inverse: $g \circ f = \id_B$ for some $g : B \to A$. Similarly, show that $f$ is surjective iff it has a right inverse: $f \circ h = \id_A$ for some $h : B \to A$. Thus conclude that bijections are exactly those functions with two-sided inverses.
+\end{exercise}
+
+\subsubsection{Bijections and inverses}
+
+\begin{remark}
+One reason bijections are important is because they allow us to compare \emph{sizes} of sets -- we say two sets \emph{have the same size} (or \vocab{cardinality}) if there \emph{exists} a bijection $f : A \to B$ (or $B \to A$; it doesn't matter). Intuitively, the existence of a bijection means we can ``match the elements of $A$ up perfectly with those of $B$''.
+
+Obviously, if the sets are finite, this may seem like overkill since you can just look and see if they have the same number of elements! But for infinite sets the concept of ``number of elements'' suddenly becomes rather nebulous, whereas the existence of a bijection remains a perfectly well-defined and clear concept.
+\end{remark}
+
+\begin{definition}
+If you have a bijection $f : A \to B$ then by ``reversing the arrows'' you can get a function $f^{-1} : B \to A$ that ``undoes'' $f$. Specifically, $f^{-1}$ is defined as follows: for any $b \in B$, we know since $f$ is a bijection that there is a unique element $a \in A$ such that $f(a)=b$. Then simply define $f^{-1}(b)$ to be that particular $a$.
+
+This function $f^{-1}$ then (clearly) satisfies that $f^{-1}(f(a)) = a$ for all $a \in A$, and $f(f^{-1}(b)) = b$ for all $b \in B$. Or, more succinctly, using composition notation, $f^{-1} \circ f = \mathrm{id}_A$ and $f \circ f^{-1} = \mathrm{id}_B$. We call $f^{-1}$ the \vocab{inverse function} to $f$.
+\end{definition}
+
+\subsubsection{Formal definition of a function}
+
+I did tell you that at the end of the day, basically everything in math was a set (usually with tons of other sets nested many layers deep inside it). So sets are like the DNA, or the ``zeros and ones'', if you will, of mathematics. \emph{Everything} is made of them if you stare closely enough. Of course, ``pulverizing things into set-theoretic dust'' hardly ever gives insight or intuition into a problem. But sets are the nuts and bolts of how things are ``implemented'' underneath the hood.
+
+In particular, functions \emph{are} themselves (certain kinds of) sets, even though they ``go between sets''. In fact, here is the formal mathematical definition of a function:
+
+\begin{definition}
+Suppose $A$ and $B$ are sets. A \vocab{function} $f$ from $A$ to $B$ is a subset of the Cartesian product $A \times B$ such that: for every $a \in A$, there is \textbf{one, and only one}, element $b \in B$ such that $(a,b) \in f$.
+\end{definition}
+
+The formal definition of a function therefore captures the concept of a function through its \vocab{graph}, which is the set
+\[ \{ (x,f(x)) \mid x \in A \} \subseteq A \times B. \]
+To see why it's called the ``graph'', suppose $A=B=\RR$ and $f$ is defined simply by, say, $f(x)=x^2$. Then the above set is a \emph{graph} you've probably seen in class, namely the familiar parabola. %So, motivated by this, mathematicians just took this and generalized it to any function between any two sets (need not have anything to do with $\RR$).
+
+This formal definition, as you can see, completely avoids the need for vague terms like ``rule'' and ``assign'' that we used in our ``intuitive'' definition of a function.
+
+\begin{example}
+With the formal definition in hand, we can see that for any set $A$ there is a \emph{unique} function $\varnothing \to A$, called the \vocab{empty function}.
+\end{example}
+
+\subsection{Counting}
+
+Here we introduce a few of the most absolutely basic objects in combinatorics. Enumerative problems are almost always very simple to state, yet they can run the gamut from completely routine exercises to unsolved research problems.
+
+\subsubsection*{Factorials and binomial coefficients}
+
+\begin{example}
+The number of permutations of an $n$-element set is given by the \vocab{factorial} $n!$ of $n$, defined by
+\[ n! = n(n-1)(n-2) \cdots 2 \cdot 1. \]
+It is not hard to see why. Choose an element, pick somewhere to send it: you have $n$ choices. Now choose another element, pick somewhere to send it: you have $n-1$ choices (you can send it anywhere other than the choice you just made). So on, all the way down to the last ($n$th) element.
+\end{example}
+
+% A crucial thing to know about the factorial is \emph{Stirling's approximation}, which we will see later.
+
+\begin{example}
+The number of size $k$ subsets of an $n$-element set is given by the \vocab{binomial coefficient}
+\[ \binom{n}{k} := \frac{n!}{k!(n-k)!}. \]
+To see this, note that every permutation of $\{ 1, \ldots, n \}$ gives rise to a size $k$ subset by looking at which elements appear in its first $k$ positions. Since we can independently scramble the first $k$ positions and last $n-k$ positions however we desire, we see that each size $k$ subset arises from exactly $k!(n-k)!$ permutations in this manner. Thus,
+\[ (\text{\# of size $k$ subsets}) \cdot k!(n-k)! = n! \]
+from which the claim follows.
+\end{example}
+
+\begin{exercise}
+Using only their enumerative interpretation, show that binomial coefficients obey the symmetry $\binom{n}{k} = \binom{n}{n-k}$ and the recurrence
+\[ \binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}. \]
+\emph{Hint}: A $k$-subset of $\{ 1, \ldots, n \}$ either contains $n$, or does not...
+
+Give a (decidedly less enlightening) alternate proof of the explicit formula above by noticing the right-hand side satisfies the same recurrence with the same initial conditions, and thus must coincide with $\binom{n}{k}$.
+\end{exercise}
+
+\begin{exercise}[due to Adam Venis]
+% See Gmail chat 2017.12.09
+Figure out how to compute $\binom{n}{k}$ for large $n$ and $k$ without computations of huge factorials causing integer overflow. Hint: you can do a lot better than simply rewriting it as
+\[ \frac{n(n-1)\cdots(n-k+1)}{k!}. \]
+For example, observe that it is not even clear, a priori, that this quotient is an integer. Start thinking about this and the knowledge you gain should lead to a nice algorithm.
+\end{exercise} 
+
+\begin{soln}
+The idea here, I believe, is that
+\[ \binom{n}{k} = \frac{n}{k} \binom{n-1}{k-1}. \qedhere \]
+\end{soln}
+
+\begin{exercise} % encountered 2019.03.02, while thinking about exceptional outer automorphism of S_6 and related proof
+Give a bijection between pairs of distinct 2-subsets from $\{ 1, \ldots, n+1 \}$ and pairs of arbitrary 2-subsets from $\{ 1, \ldots, n \}$, thus deduce the identity
+\[ \half \binom{n+1}{2} \binom{n-1}{2} = \binom{\binom{n}{2}}{2}. \]
+\end{exercise}
+
+\begin{proof}[Solution (due to Harmony Zhan)]
+If $(ab)(cd)$ with no overlap, leave it alone. Send $(an)(bn)$ to $(n+1,n)(ab)$, send $(an)(ab)$ to $(n+1,b)(an)$, and send $(ab)(ac)$ to $(n+1,a)(bc)$. Verify this is a bijection. A graph-theoretic or visual interpretation of this would be desirable.
+\end{proof}
+
+\subsubsection*{Multisets, stars and bars}
+
+We can, following \cite{Sta1}, also write $\left( \!\! {n \choose k} \!\! \right) = \binom{n+k-1}{k}$ for the multiset coefficient, i.e.\ the number of size $k$ multisets on the underlying set $\{ 1, \ldots, n \}$, or what is the same, the number of functions from the latter set into $\NN^{\geq 0}$ satisfying $\sum_1^n f(i) = k$. This is, of course, also the number of monomials of total weight $k$ in $n$ variables $x_1, \ldots, x_n$.
+
+\subsubsection*{Simple summations}
+
+Now we showcase a useful idea: we can derive cute formulas by counting the same thing in two different ways.
+
+\begin{example}
+The sum $1+\cdots+n$ of the first $n$ integers is
+\[ \frac{n(n+1)}{2}. \]
+TODO: Picture proof
+\end{example}
+
+The above example can easily be bootstrapped to a formula for the sum of \emph{any} arithmetic progression, including the next example. Try it!
+
+\begin{example}
+The sum $1+3+\cdots+(2n-1)$ of the first $n$ odd integers is
+\[ n^2. \]
+To see this, draw an $n \times n$ grid. Clearly, there are $n^2$ dots here. Now, peel off successive ``hooks'' to see that the total number of dots must \emph{also} be
+\[ 1 + 3 + 5 + \cdots + (2n-1). \]
+% TODO: picture
+\end{example}
+
+\begin{example}
+Integer partitions, Stirling numbers of the second kind, etc.  Weak compositions, lattice paths, de Brujin sequences, Lyndon words... \cite{Sta1}.
+\end{example}
+
+\subsection{Cardinality}
+
+See \cite{PM442}. Let us expand a bit more on the notion of cardinality we alluded to above.
+
+\begin{lemma}
+If $A$ and $B$ are sets, then either there is an injection $A \to B$, or an injection $B \to A$.
+\end{lemma}
+
+\begin{proof}
+Equivalent to AC, apparently.
+\end{proof}
+
+\begin{theorem}[Cantor--Schroeder--Bernstein]
+If there are injections $A \to B$ and $B \to A$, then there is a bijection $A \to B$.
+\end{theorem}
+
+The following theorem is proved by \emph{Cantor's diagonal argument}, an idea which reappears also in logic (G\"odel's incompleteness theorem) and computer science (the halting problem).
+
+\begin{theorem}[Cantor's Theorem]
+$\mathcal{P}(A)$ is of strictly greater cardinality than $A$.
+\end{theorem}
+
+\begin{theorem}
+$[0,1]$ is uncountable.
+\end{theorem}
+
+The cardinality of $\RR$ is denoted $\mathfrak{c}$.
+
+\begin{remark}
+$2^{\aleph_0} = \mathfrak{c}$. The argument uses binary expansions.
+\end{remark}
+
+\begin{proposition}[Continuum hypothesis]
+$2^{\aleph_0} = \aleph_1$. That is, there is no set whose cardinality lies strictly between that of $\NN$ and that of $\RR$.
+\end{proposition}
+
+\begin{proof}
+This is independent of ZFC.
+\end{proof}
+
+\subsection{Categories}
+
+% OUTLINE OF TOPICS:
+% categories, discrete categories, product of categories
+% initial/terminal objects
+% mono/epimorphisms
+% functors, full and faithful functors, equivalence of categories (<=> fully faithful and essentially surjective)
+% slice/comma categories and universal morphisms to a functor
+% category of all categories
+% poset categories
+% forgetful functors/concrete categories
+% natural transformations and natural isomorphisms (eg. double duality isomorphism in linear algebra)
+% dinatural and extranatural transformations (e.g. inner product dual isomorphism)
+% diagrams, limits and colimits (products, coproducts, equalizers, coequalizers, kernels, cokernels)
+% adjunctions (currying, Hom-tensor), adjoint functor theorem, units and counits
+% representables and Yoneda's lemma, presheaves
+% free objects
+% abelian categories and Freyd–Mitchell embedding, homological algebra (exact functors)
+% monads, monoidal structures, monoid and group objects, algebras for a monad; connections to universal algebra ('categories of algebras over the category of sets'; see Riehl's preface.)
+% injectives and projectives, generators and cogenerators (e.g. the Stone–Cech compactification)
+% ends and coends, Kan extensions -- all concepts are Kan extensions (also, derived functors are Kan extensions, and Kan extensions facilitate the passage to enriched/internal/higher/etc category theory; see Riehl's preface.)
+% Lawvere theories and natural transformations of the identity functor(?)
+% Tannakian categories/formalism
+
+References include \cite{Mac2,Rie,Lei,Borc,Lawv}. Categories, functors and natural transformations were introduced by Eilenberg and Mac Lane in 1945 in response to the development of homological algebra. % REFS: Riehl, section 1.0
+
+A few observations about function composition:
+\begin{itemize}
+\item Function composition is associative: $(f \circ g) \circ h = f \circ (g \circ h)$.
+\item Every set has an identity function $\mathrm{id}_A$ which behaves as an identity for this composition: $f \circ \mathrm{id} = f$ and $\mathrm{id} \circ g = g$. \texttt{[TODO commutative parallelogram]}.
+\end{itemize}
+
+This basic ``monoidal'' structure is formalized in the concept of a category.
+
+\begin{definition}
+A \vocab{category} is a collection of objects, a collection of morphisms, together with ``source'' and ``target'' maps from the latter to the former, and an abstract ``composition'' operation which satisfies the above monoidal axioms.
+\end{definition}
+
+\begin{remark}
+Comment on the foundational issues (no set of all sets, etc).
+\end{remark}
