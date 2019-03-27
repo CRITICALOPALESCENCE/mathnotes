@@ -1,0 +1,98 @@
+\section{Linear algebra I}
+
+\emph{They're positive and definite; they'll never be degenerate... unless! We confine them to an isotropic subspace. Then they would be degenerate! Oh, but I said they were positive definite didn't I?}
+
+\subsection{Vector spaces and linear maps}
+
+\begin{example}
+Examples of linear maps: differentiation, integration,
+\end{example}
+
+\subsection{Linear independence and span}
+\subsection{Basis and dimension}
+\subsection{Matrix representation of linear maps}
+
+Let $T : V \to W$ be a linear map, and let $\alpha = \{ e_1, \ldots, e_n \}$ and $\beta = \{ f_1, \ldots, f_m \}$ be ordered bases for $V$ and $W$ respectively. Then there is a unique $m \times n$ matrix $[T]_\alpha^\beta$ such that for all $v \in V$,
+\[ [Tv]_\beta = [T]_\alpha^\beta [v]_\alpha. \]
+If we write
+\[ Te_j = \sum_{i=1}^m a_{ij} f_i \]
+then $[T]_\alpha^\beta = (a_{ij})$. In other words, the columns of $[T]_\alpha^\beta$ are $[Te_1]_\beta, \ldots, [Te_n]_\beta$.
+
+\subsection{Matrix multiplication}
+
+The many different interpretations of matrix-vector and matrix-matrix products: taking linear combinations of the columns, taking dot products with the rows, etc...
+
+\subsection{Geometry of linear transformations}
+
+Null space is the orthogonal complement of the row space (follows from above interpretation).
+
+\subsection{Determinants and volume}
+
+The absolute value of the determinant measures the factor by which a linear operator distorts volume. The sign tells you whether it preserves or reverses orientation. See \cite{Gari}.
+
+\[ \det(A) = \sum_{\sigma \in S_n} \mathrm{sgn}(\sigma) a_{1,\sigma(1)} \cdots a_{n,\sigma(n)} = \epsilon_{i_1 \cdots i_n} a_{i_1} \cdots a_{i_n}. \]
+This is called the \vocab{Leibniz expansion}. Since we have not formally introduced the symmetric groups, we just give what this means for small $n$. For $n=2$,
+\[ \det(A) = a_{11} a_{22} - a_{12} a_{21} = \text{``$ad - bc$''}. \]
+For $n=3$
+\[ \det(A) = \text{(6 terms)} \]
+
+\subsubsection{Cramer's rule}
+
+% TODO: explain the idea in \cite[20190323]{ssp} here.
+
+\subsubsection{Further perspectives}
+
+See \cite[Ch.\ 10]{Lax}.
+
+\begin{theorem}
+% REFS: https://en.wikipedia.org/wiki/Functional_determinant#Path_integral_version
+For a positive selfadjoint operator $S$ on a finite-dimensional Euclidean space $V$,
+\[ \frac{1}{\sqrt{\det S}} = \int_V e^{-\pi \langle x, Sx \rangle} \; dx. \]
+\end{theorem}
+
+This result is useful in attempts to extend the determinant to the infinite-dimensional case.
+
+\begin{remark}
+If $X(t)$ is a differentiable matrix-valued function and $X(0) = I$, then $\frac{d}{dt} \left. \det X(t) \right|_{t=0} = \Tr \dot{X}(0)$. See \cite[p.\ 126]{Lax}.
+\end{remark}
+
+\begin{remark}
+% https://mathoverflow.net/questions/304445/does-the-zeta-regularized-laplacian-determinant-measure-the-volume-of-some-param
+There is also a concept of ``zeta-regularized determinant'' $e^{-\zeta'(0)}$ for certain operators on infinite-dimensional spaces (e.g.\ Laplacians).
+\end{remark}
+
+\subsection{Schur triangularization over $\CC$}
+
+Being conjugate to an upper triangular matrix amounts to a geometric property of an operator, namely, stabilizing a complete flag of subspaces. The following theorem shows every linear operator on $\CC^n$ has this property.
+
+\begin{theorem}[Schur decomposition]
+Any square matrix $A$ over $\CC$ can be upper triangularized: $A = QUQ^{-1}$ where $Q$ is a unitary matrix and $U$ is an upper triangular matrix. We call $U$ a \vocab{Schur form} of $A$.
+\end{theorem}
+
+\begin{proof}
+Pick an eigenvector, pass to quotient, repeat.
+\end{proof}
+
+\subsection{Eigenstuff and diagonalization; matrix powers}
+
+\begin{definition}
+Define \vocab{characteristic polynomial} and \vocab{minimal polynomial} here.
+\end{definition}
+
+% TODO: Mention the Berkowitz algorithm for quickly computing char poly.
+
+Courant--Fischer extremal characterization of eigenvalues in terms of Rayleigh quotient. % REFS: https://en.wikipedia.org/wiki/Min-max_theorem
+
+\begin{theorem}[Cayley--Hamilton]
+The minimal polynomial divides the characteristic polynomial. In other words, a matrix is annihilated by its characteristic polynomial.
+\end{theorem}
+
+(No, you cannot just ``plug it in''.)
+
+\subsection{Application: Binet's formula for Fibonacci numbers}
+
+As an application of these ideas, we will derive Binet's formula for the Fibonacci numbers:
+\[ F_n = \frac{\varphi^n - \psi^n}{\sqrt 5}. \]
+Look at powers of
+\[ \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}, \qquad \begin{pmatrix} a \\ b \end{pmatrix} \mapsto \begin{pmatrix} a+b \\ a \end{pmatrix} \]
+If we diagonalize, these powers will be easy to compute. There is an alternative approach using generating functions and partial fractions.

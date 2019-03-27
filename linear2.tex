@@ -1,0 +1,83 @@
+\section{Linear algebra II}
+
+% REFS: https://math.stackexchange.com/questions/433858/high-level-linear-algebra-book
+
+\cite{Lax} has a somewhat eccentric selection of topics.
+
+\subsection{Some affine geometry}
+
+Affine independence. Convex sets. Simplices. Centres of simplices.
+
+\subsection{Pick's theorem and Ehrhart polynomials}
+
+\subsection{Inner product spaces}
+
+\begin{definition}
+Let $V$ be a real or complex vector space. An \vocab{inner product} on $V$ is a positive-definite Hermitian form on $V$.
+\end{definition}
+
+\begin{theorem}[Cauchy--Schwarz]
+$|\langle x,y \rangle| \leq \| x \| \| y \|$.
+\end{theorem}
+
+An inner product $\langle -,- \rangle$ determines a norm $\| \cdot \|$, which in turn determines a distance (metric) $d(x,y) = \| x-y \|$. We also define $\cos \theta$ to make the formula $\langle x,y \rangle = \| x \| \| y \| \cos \theta$ hold (we know this is possible due to Cauchy--Schwarz).
+
+\subsection{Orthogonality}
+
+\begin{theorem}[Gram--Schmidt]
+Every (finite-dimensional) inner product space admits an orthonormal basis.
+\end{theorem}
+
+Generalizations to infinite dimensions exist.
+
+\begin{remark}[orthogonal polynomials]
+The Gram--Schmidt algorithm, when applied to the basis $\{ 1, x, x^2, \ldots \}$ of a space of polynomials equipped with inner product $\langle f,g \rangle = \int fg \; d \alpha$ (Stieltjes) yields sequences of orthogonal polynomials. In particular when $d \alpha$ is just Lebesgue measure on $[-1,1]$ we get, up to a standardization, the \emph{Legendre polynomials}. Such ideas are quite important in applied mathematics, and we will have much more to say later on.
+\end{remark}
+
+Orthogonal complements. Orthogonal projection. Gram matrices. Moore--Penrose pseudoinverse. Polynomial interpolation. Least-squares best fit polynomials. Circumcenter of a simplex.
+
+\begin{example}[MATH 245 midterm, Spring 2011]
+Let $x_1, \ldots, x_k \in \RR^n$. Show that
+\[ \argmin_{y \in \RR^n} \sum_{i=1}^k \| y - x_i \|^2 = \frac{1}{k} \sum_{i=1}^k x_i. \]
+\end{example}
+
+\begin{proof}[Solution]
+Let $\Delta : \RR^n \to (\RR^n)^k$ be the diagonal map $x \mapsto (x,x,\ldots,x)$. Let $W \subset (\RR^n)^k$ be its image. Then the LHS is clearly the orthogonal projection of $(x_1,\ldots,x_k) \in (\RR^n)^k$ onto $W$.
+\end{proof}
+
+\subsection{Dual spaces and quotient spaces}
+
+Natural isomorphism/canonical pairing $V \cong V^{**}$ given by sending $v \in V$ to the map $\mathsf{ev}_v = (\varphi \mapsto \varphi(x))$.
+
+\subsection{Adjoint of a linear operator}
+
+Naturality square with maps $V \to V^*$ and $W \to W^*$.
+
+\subsection{Brief categorical remarks}
+
+We would like here to start placing things into a more unified conceptual picture. (Discuss categories and functors, exact sequences, etc)
+
+\subsection{Singular value decomposition}
+
+\subsection{Canonical form theory}
+
+\begin{remark}
+In fact we will realize later this is all a special case of a basic result in module theory.
+\end{remark}
+
+\subsection{Bilinear and quadratic forms}
+
+Classification of quadratic forms. Principal axis theorem/application of spectral theory. Sylvester's law of inertia.
+
+\subsection{Projective spaces}
+
+Concept of a projective space and homogeneous coordinates, Grassmannian, flag manifolds (basics), ...
+
+\subsection{Classical matrix groups}
+
+General linear, special linear, orthogonal, special orthogonal, unitary, special unitary, symplectic, projective versions of these. Comments on matrix groups over finite fields?
+
+\begin{example}
+What does the image of the trace map $\mathrm{SU}(n) \to \CC$ look like? It's a deltoid; John Baez has drawn pictures. (See Latex code for reference.)
+% REFS: \url{https://johncarlosbaez.wordpress.com/2012/09/11/rolling-circles-and-balls-part-3}
+\end{example}
