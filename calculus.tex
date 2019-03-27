@@ -1,0 +1,183 @@
+% Exponentials, logarithms etc. should have already been covered by now?
+
+\section{{\color{violet}Single-variable calculus I}: foundations, differentiability}
+
+% REFS: see course notes in the folder ``MATH 147 (1099)''.
+
+\subsection{The real numbers}
+
+% REFS: refs/limits_of_reals.pdf
+
+\begin{definition}
+A set $S \subset \RR$ is \vocab{bounded above} if there is a real number $M$ such that $s \leq M$ for all $s \in S$. We call $M$ an \vocab{upper bound} for $S$. Similarly, $S$ is \vocab{bounded below} if there is a real number $m$ such that $s \geq m$ for all $s \in S$, and we call $m$ a \vocab{lower bound} for $S$. A set that is bounded above and below is called \vocab{bounded}.
+\end{definition}
+
+The following property states that $\RR$ has no ``holes'' as $\QQ$ does.
+
+\begin{remark}[LUB property]
+A nonempty subset $S \subset \RR$ that is bounded above always has a least upper bound.
+\end{remark}
+
+We take the above as an axiom; if on the other hand one constructs $\RR$ from first principles, it can be established as a theorem.
+
+\begin{remark}
+$\QQ$ is dense in $\RR$.
+\end{remark}
+
+\begin{remark}[Archimedean property]
+Every real number is less than some natural number.
+\end{remark}
+
+\subsection{Sequences}
+
+Informally, a sequence is an infinite ``list'' of real numbers, where order matters.
+
+\begin{example}[Thue--Morse sequence] % ``Erik's sequence''
+Consider the rather intriguing sequence
+\[ 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0... \]
+Here is one way of forming this sequence: first, write down 0. At each step, flip all the bits you've written so far and append them to the end. Thus, what we have written down evolves as follows:
+\[ 0 \to {\color{gray}0}1 \to {\color{gray}01}10 \to {\color{gray}0110}1001 \to {\color{gray}01101001}10010110 \to \ldots \]
+\end{example}
+
+\begin{definition}
+Formally speaking, a \vocab{sequence} is a function $f : \NN \to \RR$. For $n \in \NN$, we call $f(n)$ the \vocab{$n$th term} of the sequence. For the sake of intuitive notation, we usually denote the $n$th term by $a_n$ (or $b_n$, etc.) rather than $f(n)$. We denote the whole sequence by $(a_n)_{n \in \NN}$ or simply $(a_n)$.
+
+A \vocab{subsequence} is a sequence of the form $(b_k) := (a_{n_k})$, where $(n_k)$ is a sequence of natural numbers such that $n_1 < n_2 < \cdots$.
+\end{definition}
+
+Note that a sequence can be anything at all; it need not follow any sort of pattern. There are several ways of specifying a sequence: one can write a formula for the $n$th term, one can write terms out until the pattern becomes apparent, or one can specify it by \emph{recursion}.
+
+\begin{example}[Ramanujan]
+Let $a_1 = 1$ and for any $n \geq 1$, let $a_{n+1} = \sqrt{1+a_n}$. Thus the terms of this sequence are
+\[ 1, \quad \sqrt{2}, \quad \sqrt{1+\sqrt{2}}, \quad \sqrt{1+\sqrt{1+\sqrt{2}}}, \quad \ldots \]
+\end{example}
+
+We now define the concept of a limit.
+
+\begin{definition}
+Let $L$ be a real number. A sequence $(a_n)$ is said to \vocab{have limit $L$} (or \vocab{converge to $L$}) if for all $\eps > 0$, there exists $N$ such that $k \geq N$ implies $|x_k - L| < \eps$. We write $a_n \to L$ if this is the case, and call $(a_n)$ \vocab{convergent}.
+\end{definition}
+
+\begin{remark}
+It can be shown that Ramanujan's sequence satisfies
+\[ \lim a_n = \text{``$\sqrt{1+\sqrt{1+\sqrt{\ddots}}}$''} = \varphi = 1.618\ldots. \]
+\end{remark}
+
+\begin{remark}
+There are also various limits for $\pi$. \vocab{Vi\`ete's formula}:
+\[ \frac{2}{\pi} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2+\sqrt{2}}}{2} \cdots \]
+\vocab{Wallis' product}:
+\[ \frac{\pi}{2} = \frac{2}{1} \cdot \frac{2}{3} \cdot \frac{4}{3} \cdot \frac{4}{5} \cdot \frac{6}{5} \cdot \frac{6}{7} \cdots \]
+and \emph{Ramanujan--Sato series}, which we better not get into here.
+\end{remark}
+
+\begin{theorem}[limits are unique]
+Suppose $\lim a_n = L$ and $\lim a_n = M$. Then $L = M$.
+\end{theorem}
+
+\begin{theorem}[monotone convergence]
+If a sequence $(a_n)$ is monotonic and bounded, then it converges.
+\end{theorem}
+
+\begin{remark}
+A convergent sequence is bounded.
+\end{remark}
+
+\begin{lemma}[peak point]
+Every sequence has a monotone subsequence.
+\end{lemma}
+
+\begin{theorem}[Bolzano--Weierstrass]
+Every bounded sequence in $\RR$ has a convergent subsequence.
+\end{theorem}
+
+In fact this result extends straightforwardly to $\RR^n$.
+
+\subsubsection{Series}
+
+\begin{definition}
+Given a sequence $(a_n)$, we define the \vocab{$k$th partial sum} as
+\[ S_k := a_1 + a_2 + \cdots + a_k = \sum_{n=1}^k a_n. \]
+We say that the series $\sum_{n=1}^\infty a_n$ \vocab{converges} if the sequence $(S_k)$ of partial sums converges. In this case, we write $\sum_{n=1}^\infty a_n = \lim_{k \to \infty} S_k$. Otherwise, we say the series \vocab{diverges}.
+\end{definition}
+
+\begin{example}[geometric series]
+Let $r \in \RR$ and consider $a_n = r^n$. For which values of $r$ does $\sum a_n$ converge?
+\end{example}
+
+From the above example, we conclude
+\begin{theorem}
+A geometric series $\sum_{n=0}^\infty r^n$ converges if and only if $|r| < 1$.
+\end{theorem}
+
+Comparison tests for series.
+
+\begin{example}[harmonic series]
+Does $\displaystyle \sum_{n=1}^\infty \frac{1}{n}$ converge?
+\end{example}
+
+\begin{example}[Basel problem]
+$\displaystyle \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$.
+\end{example}
+
+\subsection{Limits and continuity}
+
+Limit laws. Squeeze theorem.
+
+\subsection{Intermediate value theorem, bisection}
+\subsection{Compactness and the extreme value theorem}
+
+\subsection{Differentiability}
+
+\begin{example}[famous counterexample]
+Consider the function
+\[ f(x) = \cdots \]
+This is called the \vocab{Weierstrass function}.
+\end{example}
+
+\subsection{Mean value theorem}
+
+\begin{theorem}[Rolle]
+If $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$, and $f(a)=f(b)$, then there exists $c \in (a,b)$ with $f'(c) = 0$.
+\end{theorem}
+
+\subsection{L'H\^opital's Rule}
+\subsection{Critical points, first derivative test}
+\subsection{Implicit differentiation; related rates}
+\subsection{Newton's method}
+\subsection{Taylor's theorem}
+
+This is very important in applications (optimization etc). It tells us precisely how to approximate nearby values of the function by using derivatives (idea of linearization) and gives useful bounds on the errors made in doing so.
+
+\section{{\color{violet}Single-variable calculus II}: integration, series}
+
+\subsection{Riemann integral}
+\subsection{Fundamental theorem of calculus}
+\subsection{Banach fixed point theorem}
+\subsection{Volume problems}
+\subsection{Convergence tests for series}
+\subsection{Power series}
+\subsection{Sequences of functions}
+\subsection{Uniform convergence}
+
+\begin{definition}
+A sequence $(f_n)$ of functions is said to \vocab{converge uniformly} to $f$ if for all $\eps > 0$ there exists $N$ such that $k \geq N$ implies that $|f_n(x) - f(x)| < \eps$ for all $x$.
+\end{definition}
+
+Alternatively, $\| f_n - f \|_\infty \to 0$ where $\| f \| = \sup_x |f(x)|$ is the \emph{uniform norm}.
+
+\begin{example}
+The sequence of functions $x^n$ on $[0,1]$ show that pointwise limits of continuous functions need not be continuous.
+\end{example}
+
+\begin{theorem}
+Uniform limit of continuous functions is continuous.
+\end{theorem}
+
+\begin{proof}
+The famous $\eps/3$ trick \cite{PM351}.
+\end{proof}
+
+\subsection{Differentiation and integration of power series}
+
+\subsection{Basic differential equations}
